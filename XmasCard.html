@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
 
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+
+
     <title>Christmas Card For Deb</title>
 
     <meta name="viewport"
@@ -44,6 +48,14 @@
             transform: rotate(-10deg) translate(0, 0);
             -webkit-animation: cardIn 1s alternate cubic-bezier(0.87, -0.41, 0.19, 1.44);
             animation: cardIn 1s alternate cubic-bezier(0.87, -0.41, 0.19, 1.44);
+        }
+
+         /* 将按钮定位到左上角 */
+        button {
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 10px; /* 可以根据需要调整按钮与屏幕边缘的距离 */
         }
 
         @media (max-width: 767px) {
@@ -319,20 +331,20 @@
 
         p {
             font-family: "Mirza", Verdana, Arial, serif;
-            font-size: 16px;
+            font-size: 1.2em;
             line-height: 1.2em;
             padding-left: 10px;
         }
 
         @media (max-width: 767px) {
             p {
-                font-size: 16px;
+                font-size: 24px;
             }
         }
 
         @media (max-width: 479px) {
             p {
-                font-size: 12px;
+                font-size: 20px;
             }
         }
     </style>
@@ -347,9 +359,11 @@
 
 <body translate="no">
 
-<audio autoplay loop>
+<audio id="xmasAudio">
     <source src="xmas.mp3" type="audio/mpeg">
 </audio>
+ <!-- 播放和暂停按钮 -->
+    <button onclick="playPause()">Play/Pause</button>
 
 <div class="card">
     <div class="card-page cart-page-front">
@@ -551,7 +565,19 @@
     });
 
 </script>
+<script>
+    // 获取audio元素
+        var myAudio = document.getElementById("xmasAudio");
 
+        // 播放和暂停功能
+        function playPause() {
+            if (myAudio.paused) {
+                myAudio.play();
+            } else {
+                myAudio.pause();
+            }
+        }
+</script>
 
 </body>
 
