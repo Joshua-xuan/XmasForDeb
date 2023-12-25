@@ -1,101 +1,393 @@
 /*!
  * VERSION: 0.2.1
- * DATE: 2017-01-12
+ * DATE: 2017-01-17
+ * UPDATES AND DOCS AT: http://greensock.com
+ *
+ * @license Copyright (c) 2008-2017, GreenSock. All rights reserved.
+ * This work is subject to the terms at http://greensock.com/standard-license or for
+ * Club GreenSock members, the software agreement that was issued with your membership.
+ *
+ * @author: Jack Doyle, jack@greensock.com
  **/
-var _gsScope = "undefined" != typeof module && module.exports && "undefined" != typeof global ? global : this || window;
-(_gsScope._gsQueue || (_gsScope._gsQueue = [])).push(function () {
-    "use strict";
-    _gsScope._gsDefine("easing.CustomEase", ["easing.Ease"], function (S) {
-        function r(e) {
-            var t = this.lookup[e * this.l | 0] || this.lookup[this.l - 1];
-            return t.nx < e && (t = t.n), t.y + (e - t.x) / t.cx * t.cy
-        }
+var _gsScope = (typeof(module) !== "undefined" && module.exports && typeof(global) !== "undefined") ? global : this || window; //helps ensure compatibility with AMD/RequireJS and CommonJS/Node
+(_gsScope._gsQueue || (_gsScope._gsQueue = [])).push( function() {
 
-        function n(e, t, o) {
-            // if (this._calcEnd = !0, this.id = e, !h) return window.location.href = "http://" + a + s + "?plugin=" + i + "&source=codepen", !1;
-            // e && (S.map[e] = this), this.getRatio = r, this.setData(t, o)
-        }
+	"use strict";
 
-        var l = /(?:(-|-=|\+=)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/gi,
-            x = /[achlmqstvz]|(-?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/gi, y = /[\+\-]?\d*\.?\d+e[\+\-]?\d+/gi, p = /[cLlsS]/g,
-            w = "CustomEase only accepts Cubic Bezier data.", i = "CustomEase",
-            a = String.fromCharCode(103, 114, 101, 101, 110, 115, 111, 99, 107, 46, 99, 111, 109),
-            s = String.fromCharCode(47, 114, 101, 113, 117, 105, 114, 101, 115, 45, 109, 101, 109, 98, 101, 114, 115, 104, 105, 112, 47),
-            h = function (e) {
-                for (var t = -1 !== (window ? window.location.href : "").indexOf(String.fromCharCode(103, 114, 101, 101, 110, 115, 111, 99, 107)) && -1 !== e.indexOf(String.fromCharCode(108, 111, 99, 97, 108, 104, 111, 115, 116)), o = [a, String.fromCharCode(99, 111, 100, 101, 112, 101, 110, 46, 105, 111), String.fromCharCode(99, 111, 100, 101, 112, 101, 110, 46, 112, 108, 117, 109, 98, 105, 110, 103), String.fromCharCode(99, 111, 100, 101, 112, 101, 110, 46, 100, 101, 118), String.fromCharCode(99, 111, 100, 101, 112, 101, 110, 46, 97, 112, 112), String.fromCharCode(112, 101, 110, 115, 46, 99, 108, 111, 117, 100), String.fromCharCode(112, 101, 110, 115, 46, 105, 111), String.fromCharCode(109, 111, 116, 105, 111, 110, 116, 114, 105, 99, 107, 115, 46, 99, 111, 109), String.fromCharCode(99, 115, 115, 45, 116, 114, 105, 99, 107, 115, 46, 99, 111, 109), String.fromCharCode(99, 100, 112, 110, 46, 105, 111), String.fromCharCode(103, 97, 110, 110, 111, 110, 46, 116, 118), String.fromCharCode(99, 111, 100, 101, 99, 97, 110, 121, 111, 110, 46, 110, 101, 116), String.fromCharCode(116, 104, 101, 109, 101, 102, 111, 114, 101, 115, 116, 46, 110, 101, 116), String.fromCharCode(99, 101, 114, 101, 98, 114, 97, 120, 46, 99, 111, 46, 117, 107), String.fromCharCode(116, 121, 109, 112, 97, 110, 117, 115, 46, 110, 101, 116), String.fromCharCode(116, 119, 101, 101, 110, 109, 97, 120, 46, 99, 111, 109), String.fromCharCode(116, 119, 101, 101, 110, 108, 105, 116, 101, 46, 99, 111, 109), String.fromCharCode(112, 108, 110, 107, 114, 46, 99, 111), String.fromCharCode(104, 111, 116, 106, 97, 114, 46, 99, 111, 109), String.fromCharCode(119, 101, 98, 112, 97, 99, 107, 98, 105, 110, 46, 99, 111, 109), String.fromCharCode(97, 114, 99, 104, 105, 118, 101, 46, 111, 114, 103), String.fromCharCode(99, 111, 100, 101, 115, 97, 110, 100, 98, 111, 120, 46, 105, 111), String.fromCharCode(115, 116, 97, 99, 107, 98, 108, 105, 116, 122, 46, 99, 111, 109), String.fromCharCode(99, 111, 100, 105, 101, 114, 46, 105, 111), String.fromCharCode(106, 115, 102, 105, 100, 100, 108, 101, 46, 110, 101, 116)], r = o.length; -1 < --r;) if (-1 !== e.indexOf(o[r])) return !0;
-                return t && window && window.console && console.log(String.fromCharCode(87, 65, 82, 78, 73, 78, 71, 58, 32, 97, 32, 115, 112, 101, 99, 105, 97, 108, 32, 118, 101, 114, 115, 105, 111, 110, 32, 111, 102, 32) + i + String.fromCharCode(32, 105, 115, 32, 114, 117, 110, 110, 105, 110, 103, 32, 108, 111, 99, 97, 108, 108, 121, 44, 32, 98, 117, 116, 32, 105, 116, 32, 119, 105, 108, 108, 32, 110, 111, 116, 32, 119, 111, 114, 107, 32, 111, 110, 32, 97, 32, 108, 105, 118, 101, 32, 100, 111, 109, 97, 105, 110, 32, 98, 101, 99, 97, 117, 115, 101, 32, 105, 116, 32, 105, 115, 32, 97, 32, 109, 101, 109, 98, 101, 114, 115, 104, 105, 112, 32, 98, 101, 110, 101, 102, 105, 116, 32, 111, 102, 32, 67, 108, 117, 98, 32, 71, 114, 101, 101, 110, 83, 111, 99, 107, 46, 32, 80, 108, 101, 97, 115, 101, 32, 115, 105, 103, 110, 32, 117, 112, 32, 97, 116, 32, 104, 116, 116, 112, 58, 47, 47, 103, 114, 101, 101, 110, 115, 111, 99, 107, 46, 99, 111, 109, 47, 99, 108, 117, 98, 47, 32, 97, 110, 100, 32, 116, 104, 101, 110, 32, 100, 111, 119, 110, 108, 111, 97, 100, 32, 116, 104, 101, 32, 39, 114, 101, 97, 108, 39, 32, 118, 101, 114, 115, 105, 111, 110, 32, 102, 114, 111, 109, 32, 121, 111, 117, 114, 32, 71, 114, 101, 101, 110, 83, 111, 99, 107, 32, 97, 99, 99, 111, 117, 110, 116, 32, 119, 104, 105, 99, 104, 32, 104, 97, 115, 32, 110, 111, 32, 115, 117, 99, 104, 32, 108, 105, 109, 105, 116, 97, 116, 105, 111, 110, 115, 46, 32, 84, 104, 101, 32, 102, 105, 108, 101, 32, 121, 111, 117, 39, 114, 101, 32, 117, 115, 105, 110, 103, 32, 119, 97, 115, 32, 108, 105, 107, 101, 108, 121, 32, 100, 111, 119, 110, 108, 111, 97, 100, 101, 100, 32, 102, 114, 111, 109, 32, 101, 108, 115, 101, 119, 104, 101, 114, 101, 32, 111, 110, 32, 116, 104, 101, 32, 119, 101, 98, 32, 97, 110, 100, 32, 105, 115, 32, 114, 101, 115, 116, 114, 105, 99, 116, 101, 100, 32, 116, 111, 32, 108, 111, 99, 97, 108, 32, 117, 115, 101, 32, 111, 114, 32, 111, 110, 32, 115, 105, 116, 101, 115, 32, 108, 105, 107, 101, 32, 99, 111, 100, 101, 112, 101, 110, 46, 105, 111, 46)), t
-            }(window ? window.location.host : ""), D = function (e, t, o, r, n, i, a, s, h, f, g) {
-                var d, u = (e + o) / 2, c = (t + r) / 2, C = (o + n) / 2, l = (r + i) / 2, p = (n + a) / 2, m = (i + s) / 2,
-                    S = (u + C) / 2, x = (c + l) / 2, y = (C + p) / 2, w = (l + m) / 2, _ = (S + y) / 2, v = (x + w) / 2,
-                    M = a - e, b = s - t, k = Math.abs((o - a) * b - (r - s) * M), z = Math.abs((n - a) * b - (i - s) * M);
-                return f || (f = [{x: e, y: t}, {x: a, y: s}], g = 1), f.splice(g || f.length - 1, 0, {
-                    x: _,
-                    y: v
-                }), h * (M * M + b * b) < (k + z) * (k + z) && (d = f.length, D(e, t, u, c, S, x, _, v, h, f, g), D(_, v, y, w, p, m, a, s, h, f, g + 1 + (f.length - d))), f
-            }, e = n.prototype = new S;
-        return e.constructor = n, e.setData = function (e, t) {
-            var o, r, n, i, a, s, h, f, g, d = (e = e || "0,0,1,1").match(l), u = 1, c = [],
-                C = (t = t || {}).precision || 1;
-            if (this.data = e, this.lookup = [], this.points = c, this.fast = C <= 1, (p.test(e) || -1 !== e.indexOf("M") && -1 === e.indexOf("C")) && (d = function (e) {
-                for (var t, o, r, n, i, a, s, h, f, g, d = (e + "").replace(y, function (e) {
-                    var t = +e;
-                    return t < 1e-4 && -1e-4 < t ? 0 : t
-                }).match(x) || [], u = [], c = 0, C = 0, l = d.length, p = 2, m = 0; m < l; m++) if (h = r, isNaN(d[m]) ? n = (r = d[m].toUpperCase()) !== d[m] : m--, t = +d[m + 1], o = +d[m + 2], n && (t += c, o += C), m || (a = t, s = o), "M" === r) i && i.length < 8 && (--u.length, p = 0), i = [c = a = t, C = s = o], p = 2, u.push(i), m += 2, r = "L"; else if ("C" === r) (i = i || [0, 0])[p++] = t, i[p++] = o, n || (c = C = 0), i[p++] = c + +d[m + 3], i[p++] = C + +d[m + 4], i[p++] = c += +d[m + 5], i[p++] = C += +d[m + 6], m += 6; else if ("S" === r) "C" === h || "S" === h ? (f = c - i[p - 4], g = C - i[p - 3], i[p++] = c + f, i[p++] = C + g) : (i[p++] = c, i[p++] = C), i[p++] = t, i[p++] = o, n || (c = C = 0), i[p++] = c += +d[m + 3], i[p++] = C += +d[m + 4], m += 4; else {
-                    if ("L" !== r && "Z" !== r) throw w;
-                    "Z" === r && (t = a, o = s, i.closed = !0), ("L" === r || .5 < Math.abs(c - t) || .5 < Math.abs(C - o)) && (i[p++] = c + (t - c) / 3, i[p++] = C + (o - C) / 3, i[p++] = c + 2 * (t - c) / 3, i[p++] = C + 2 * (o - C) / 3, i[p++] = t, i[p++] = o, "L" === r && (m += 2)), c = t, C = o
-                }
-                return u[0]
-            }(e)), 4 === (o = d.length)) d.unshift(0, 0), d.push(1, 1), o = 8; else if ((o - 2) % 6) throw w;
-            for (0 == +d[0] && 1 == +d[o - 2] || function (e, t, o) {
-                o || 0 === o || (o = Math.max(+e[e.length - 1], +e[1]));
-                for (var r = -1 * e[0], n = -o, i = e.length, a = 1 / (+e[i - 2] + r), s = (s = -t || (Math.abs(e[i - 1] - e[1]) < .01 * (e[i - 2] - e[0]) ? function (e) {
-                    for (var t = e.length, o = 999999999999, r = 1; r < t; r += 6) +e[r] < o && (o = +e[r]);
-                    return o
-                }(e) + n : +e[i - 1] + n)) ? 1 / s : -a, h = 0; h < i; h += 2) e[h] = (+e[h] + r) * a, e[h + 1] = (+e[h + 1] + n) * s
-            }(d, t.height, t.originY), this.rawBezier = d, i = 2; i < o; i += 6) r = {
-                x: +d[i - 2],
-                y: +d[i - 1]
-            }, n = {
-                x: +d[i + 4],
-                y: +d[i + 5]
-            }, c.push(r, n), D(r.x, r.y, +d[i], +d[i + 1], +d[i + 2], +d[i + 3], n.x, n.y, 1 / (2e5 * C), c, c.length - 1);
-            for (o = c.length, i = 0; i < o; i++) h = c[i], f = c[i - 1] || h, h.x > f.x || f.y !== h.y && f.x === h.x || h === f ? (f.cx = h.x - f.x, f.cy = h.y - f.y, f.n = h, f.nx = h.x, this.fast && 1 < i && 2 < Math.abs(f.cy / f.cx - c[i - 2].cy / c[i - 2].cx) && (this.fast = !1), f.cx < u && (f.cx ? u = f.cx : (f.cx = .001, i === o - 1 && (f.x -= .001, u = Math.min(u, .001), this.fast = !1)))) : (c.splice(i--, 1), o--);
-            if (o = 1 / u + 1 | 0, a = 1 / (this.l = o), h = c[s = 0], this.fast) {
-                for (i = 0; i < o; i++) g = i * a, h.nx < g && (h = c[++s]), r = h.y + (g - h.x) / h.cx * h.cy, this.lookup[i] = {
-                    x: g,
-                    cx: a,
-                    y: r,
-                    cy: 0,
-                    nx: 9
-                }, i && (this.lookup[i - 1].cy = r - this.lookup[i - 1].y);
-                this.lookup[o - 1].cy = c[c.length - 1].y - r
-            } else {
-                for (i = 0; i < o; i++) h.nx < i * a && (h = c[++s]), this.lookup[i] = h;
-                s < c.length - 1 && (this.lookup[i - 1] = c[c.length - 2])
-            }
-            return this._calcEnd = 1 !== c[c.length - 1].y || 0 !== c[0].y, this
-        }, e.getRatio = r, e.getSVGData = function (e) {
-            return n.getSVGData(this, e)
-        }, n.create = function (e, t, o) {
-            return new n(e, t, o)
-        }, n.version = "0.2.1", n.bezierToPoints = D, n.get = function (e) {
-            return S.map[e]
-        }, n.getSVGData = function (e, t) {
-            var o, r, n, i, a, s, h, f, g, d, u = 1e3, c = (t = t || {}).width || 100, C = t.height || 100,
-                l = t.x || 0, p = (t.y || 0) + C, m = t.path;
-            if (t.invert && (C = -C, p = 0), (e = e.getRatio ? e : S.map[e] || console.log("No ease found: ", e)).rawBezier) {
-                for (o = [], h = e.rawBezier.length, n = 0; n < h; n += 2) o.push(((l + e.rawBezier[n] * c) * u | 0) / u + "," + ((p + e.rawBezier[n + 1] * -C) * u | 0) / u);
-                o[0] = "M" + o[0], o[1] = "C" + o[1]
-            } else for (o = ["M" + l + "," + p], i = 1 / (h = Math.max(5, 200 * (t.precision || 1))), f = 5 / (h += 2), g = ((l + i * c) * u | 0) / u, r = ((d = ((p + e.getRatio(i) * -C) * u | 0) / u) - p) / (g - l), n = 2; n < h; n++) a = ((l + n * i * c) * u | 0) / u, s = ((p + e.getRatio(n * i) * -C) * u | 0) / u, (Math.abs((s - d) / (a - g) - r) > f || n === h - 1) && (o.push(g + "," + d), r = (s - d) / (a - g)), g = a, d = s;
-            return m && ("string" == typeof m ? document.querySelector(m) : m).setAttribute("d", o.join(" ")), o.join(" ")
-        }, n
-    }, !0)
-}), _gsScope._gsDefine && _gsScope._gsQueue.pop()(), function () {
-    "use strict";
+	_gsScope._gsDefine("easing.CustomEase", ["easing.Ease"], function(Ease) {
 
-    function e() {
-        return (_gsScope.GreenSockGlobals || _gsScope).CustomEase
-    }
+		var _numbersExp = /(?:(-|-=|\+=)?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
+			_svgPathExp = /[achlmqstvz]|(-?\d*\.?\d*(?:e[\-+]?\d+)?)[0-9]/ig,
+			_scientific = /[\+\-]?\d*\.?\d+e[\+\-]?\d+/ig,
+			_needsParsingExp = /[cLlsS]/g,
+			_bezierError = "CustomEase only accepts Cubic Bezier data.",
+			_bezierToPoints = function (x1, y1, x2, y2, x3, y3, x4, y4, threshold, points, index) {
+				var x12 = (x1 + x2) / 2,
+					y12 = (y1 + y2) / 2,
+					x23 = (x2 + x3) / 2,
+					y23 = (y2 + y3) / 2,
+					x34 = (x3 + x4) / 2,
+					y34 = (y3 + y4) / 2,
+					x123 = (x12 + x23) / 2,
+					y123 = (y12 + y23) / 2,
+					x234 = (x23 + x34) / 2,
+					y234 = (y23 + y34) / 2,
+					x1234 = (x123 + x234) / 2,
+					y1234 = (y123 + y234) / 2,
+					dx = x4 - x1,
+					dy = y4 - y1,
+					d2 = Math.abs((x2 - x4) * dy - (y2 - y4) * dx),
+					d3 = Math.abs((x3 - x4) * dy - (y3 - y4) * dx),
+					length;
+				if (!points) {
+					points = [{x: x1, y: y1}, {x: x4, y: y4}];
+					index = 1;
+				}
+				points.splice(index || points.length - 1, 0, {x: x1234, y: y1234});
+				if ((d2 + d3) * (d2 + d3) > threshold * (dx * dx + dy * dy)) {
+					length = points.length;
+					_bezierToPoints(x1, y1, x12, y12, x123, y123, x1234, y1234, threshold, points, index);
+					_bezierToPoints(x1234, y1234, x234, y234, x34, y34, x4, y4, threshold, points, index + 1 + (points.length - length));
+				}
+				return points;
+			},
 
-    "function" == typeof define && define.amd ? define(["TweenLite"], e) : "undefined" != typeof module && module.exports && (require("./TweenLite.js"), module.exports = e())
-}();
+			_pathDataToBezier = function (d) {
+				var a = (d + "").replace(_scientific, function (m) {
+							var n = +m;
+							return (n < 0.0001 && n > -0.0001) ? 0 : n;
+						}).match(_svgPathExp) || [], //some authoring programs spit out very small numbers in scientific notation like "1e-5", so make sure we round that down to 0 first.
+					path = [],
+					relativeX = 0,
+					relativeY = 0,
+					elements = a.length,
+					l = 2,
+					i, x, y, command, isRelative, segment, startX, startY, prevCommand, difX, difY;
+				for (i = 0; i < elements; i++) {
+					prevCommand = command;
+					if (isNaN(a[i])) {
+						command = a[i].toUpperCase();
+						isRelative = (command !== a[i]); //lower case means relative
+					} else { //commands like "C" can be strung together without any new command characters between.
+						i--;
+					}
+					x = +a[i + 1];
+					y = +a[i + 2];
+					if (isRelative) {
+						x += relativeX;
+						y += relativeY;
+					}
+					if (!i) {
+						startX = x;
+						startY = y;
+					}
+					if (command === "M") {
+						if (segment && segment.length < 8) { //if the path data was funky and just had a M with no actual drawing anywhere, skip it.
+							path.length -= 1;
+							l = 0;
+						}
+						relativeX = startX = x;
+						relativeY = startY = y;
+						segment = [x, y];
+						l = 2;
+						path.push(segment);
+						i += 2;
+						command = "L"; //an "M" with more than 2 values gets interpreted as "lineTo" commands ("L").
+
+					} else if (command === "C") {
+						if (!segment) {
+							segment = [0, 0];
+						}
+						segment[l++] = x;
+						segment[l++] = y;
+						if (!isRelative) {
+							relativeX = relativeY = 0;
+						}
+						segment[l++] = relativeX + a[i + 3] * 1; //note: "*1" is just a fast/short way to cast the value as a Number. WAAAY faster in Chrome, slightly slower in Firefox.
+						segment[l++] = relativeY + a[i + 4] * 1;
+						segment[l++] = relativeX = relativeX + a[i + 5] * 1;
+						segment[l++] = relativeY = relativeY + a[i + 6] * 1;
+						i += 6;
+
+					} else if (command === "S") {
+						if (prevCommand === "C" || prevCommand === "S") {
+							difX = relativeX - segment[l - 4];
+							difY = relativeY - segment[l - 3];
+							segment[l++] = relativeX + difX;
+							segment[l++] = relativeY + difY;
+						} else {
+							segment[l++] = relativeX;
+							segment[l++] = relativeY;
+						}
+						segment[l++] = x;
+						segment[l++] = y;
+						if (!isRelative) {
+							relativeX = relativeY = 0;
+						}
+						segment[l++] = relativeX = relativeX + a[i + 3] * 1;
+						segment[l++] = relativeY = relativeY + a[i + 4] * 1;
+						i += 4;
+
+					} else if (command === "L" || command === "Z") {
+						if (command === "Z") {
+							x = startX;
+							y = startY;
+							segment.closed = true;
+						}
+						if (command === "L" || Math.abs(relativeX - x) > 0.5 || Math.abs(relativeY - y) > 0.5) {
+							segment[l++] = relativeX + (x - relativeX) / 3;
+							segment[l++] = relativeY + (y - relativeY) / 3;
+							segment[l++] = relativeX + (x - relativeX) * 2 / 3;
+							segment[l++] = relativeY + (y - relativeY) * 2 / 3;
+							segment[l++] = x;
+							segment[l++] = y;
+							if (command === "L") {
+								i += 2;
+							}
+						}
+						relativeX = x;
+						relativeY = y;
+					} else {
+						throw _bezierError;
+					}
+
+				}
+				return path[0];
+			},
+
+			_findMinimum = function (values) {
+				var l = values.length,
+					min = 999999999999,
+					i;
+				for (i = 1; i < l; i += 6) {
+					if (+values[i] < min) {
+						min = +values[i];
+					}
+				}
+				return min;
+			},
+
+			_normalize = function (values, height, originY) { //takes all the points and translates/scales them so that the x starts at 0 and ends at 1.
+				if (!originY && originY !== 0) {
+					originY = Math.max(+values[values.length-1], +values[1]);
+				}
+				var tx = +values[0] * -1,
+					ty = -originY,
+					l = values.length,
+					sx = 1 / (+values[l - 2] + tx),
+					sy = -height || ((Math.abs(+values[l - 1] - +values[1]) < 0.01 * (+values[l - 2] - +values[0])) ? _findMinimum(values) + ty : +values[l - 1] + ty),
+					i;
+				if (sy) { //typically y ends at 1 (so that the end values are reached)
+					sy = 1 / sy;
+				} else { //in case the ease returns to its beginning value, scale everything proportionally
+					sy = -sx;
+				}
+				for (i = 0; i < l; i += 2) {
+					values[i] = (+values[i] + tx) * sx;
+					values[i + 1] = (+values[i + 1] + ty) * sy;
+				}
+			},
+
+			_getRatio = function (p) {
+				var point = this.lookup[(p * this.l) | 0] || this.lookup[this.l - 1];
+				if (point.nx < p) {
+					point = point.n;
+				}
+				return point.y + ((p - point.x) / point.cx) * point.cy;
+			},
+
+
+			CustomEase = function (id, data, config) {
+				this._calcEnd = true;
+				this.id = id;
+				if (id) {
+					Ease.map[id] = this;
+				}
+				this.getRatio = _getRatio; //speed optimization, faster lookups.
+				this.setData(data, config);
+			},
+			p = CustomEase.prototype = new Ease();
+
+		p.constructor = CustomEase;
+
+		p.setData = function(data, config) {
+			data = data || "0,0,1,1";
+			var values = data.match(_numbersExp),
+				closest = 1,
+				points = [],
+				l, a1, a2, i, inc, j, point, prevPoint, p, precision;
+			config = config || {};
+			precision = config.precision || 1;
+			this.data = data;
+			this.lookup = [];
+			this.points = points;
+			this.fast = (precision <= 1);
+			if (_needsParsingExp.test(data) || (data.indexOf("M") !== -1 && data.indexOf("C") === -1)) {
+				values = _pathDataToBezier(data);
+			}
+			l = values.length;
+			if (l === 4) {
+				values.unshift(0, 0);
+				values.push(1, 1);
+				l = 8;
+			} else if ((l - 2) % 6) {
+				throw _bezierError;
+			}
+			if (+values[0] !== 0 || +values[l - 2] !== 1) {
+				_normalize(values, config.height, config.originY);
+			}
+
+			this.rawBezier = values;
+
+			for (i = 2; i < l; i += 6) {
+				a1 = {x: +values[i - 2], y: +values[i - 1]};
+				a2 = {x: +values[i + 4], y: +values[i + 5]};
+				points.push(a1, a2);
+				_bezierToPoints(a1.x, a1.y, +values[i], +values[i + 1], +values[i + 2], +values[i + 3], a2.x, a2.y, 1 / (precision * 200000), points, points.length - 1);
+			}
+			l = points.length;
+			for (i = 0; i < l; i++) {
+				point = points[i];
+				prevPoint = points[i - 1] || point;
+				if (point.x > prevPoint.x || (prevPoint.y !== point.y && prevPoint.x === point.x) || point === prevPoint) { //if a point goes BACKWARD in time or is a duplicate, just drop it.
+					prevPoint.cx = point.x - prevPoint.x; //change in x between this point and the next point (performance optimization)
+					prevPoint.cy = point.y - prevPoint.y;
+					prevPoint.n = point;
+					prevPoint.nx = point.x; //next point's x value (performance optimization, making lookups faster in getRatio()). Remember, the lookup will always land on a spot where it's either this point or the very next one (never beyond that)
+					if (this.fast && i > 1 && Math.abs(prevPoint.cy / prevPoint.cx - points[i - 2].cy / points[i - 2].cx) > 2) { //if there's a sudden change in direction, prioritize accuracy over speed. Like a bounce ease - you don't want to risk the sampling chunks landing on each side of the bounce anchor and having it clipped off.
+						this.fast = false;
+					}
+					if (prevPoint.cx < closest) {
+						if (!prevPoint.cx) {
+							prevPoint.cx = 0.001; //avoids math problems in getRatio() (dividing by zero)
+							if (i === l - 1) { //in case the final segment goes vertical RIGHT at the end, make sure we end at the end.
+								prevPoint.x -= 0.001;
+								closest = Math.min(closest, 0.001);
+								this.fast = false;
+							}
+						} else {
+							closest = prevPoint.cx;
+						}
+					}
+				} else {
+					points.splice(i--, 1);
+					l--;
+				}
+			}
+			l = (1 / closest + 1) | 0;
+			this.l = l; //record for speed optimization
+			inc = 1 / l;
+			j = 0;
+			point = points[0];
+			if (this.fast) {
+				for (i = 0; i < l; i++) { //for fastest lookups, we just sample along the path at equal x (time) distance. Uses more memory and is slightly less accurate for anchors that don't land on the sampling points, but for the vast majority of eases it's excellent (and fast).
+					p = i * inc;
+					if (point.nx < p) {
+						point = points[++j];
+					}
+					a1 = point.y + ((p - point.x) / point.cx) * point.cy;
+					this.lookup[i] = {x: p, cx: inc, y: a1, cy: 0, nx: 9};
+					if (i) {
+						this.lookup[i - 1].cy = a1 - this.lookup[i - 1].y;
+					}
+				}
+				this.lookup[l - 1].cy = points[points.length - 1].y - a1;
+			} else { //this option is more accurate, ensuring that EVERY anchor is hit perfectly. Clipping across a bounce, for example, would never happen.
+				for (i = 0; i < l; i++) { //build a lookup table based on the smallest distance so that we can instantly find the appropriate point (well, it'll either be that point or the very next one). We'll look up based on the linear progress. So it's it's 0.5 and the lookup table has 100 elements, it'd be like lookup[Math.floor(0.5 * 100)]
+					if (point.nx < i * inc) {
+						point = points[++j];
+					}
+					this.lookup[i] = point;
+				}
+
+				if (j < points.length - 1) {
+					this.lookup[i-1] = points[points.length-2];
+				}
+			}
+			this._calcEnd = (points[points.length-1].y !== 1 || points[0].y !== 0); //ensures that we don't run into floating point errors. As long as we're starting at 0 and ending at 1, tell GSAP to skip the final calculation and use 0/1 as the factor.
+			return this;
+		};
+
+		p.getRatio = _getRatio;
+
+		p.getSVGData = function(config) {
+			return CustomEase.getSVGData(this, config);
+		};
+
+		CustomEase.create = function (id, data, config) {
+			return new CustomEase(id, data, config);
+		};
+
+		CustomEase.version = "0.2.1";
+
+		CustomEase.bezierToPoints = _bezierToPoints;
+		CustomEase.get = function (id) {
+			return Ease.map[id];
+		};
+		CustomEase.getSVGData = function(ease, config) {
+			config = config || {};
+			var rnd = 1000,
+				width = config.width || 100,
+				height = config.height || 100,
+				x = config.x || 0,
+				y = (config.y || 0) + height,
+				e = config.path,
+				a, slope, i, inc, tx, ty, precision, threshold, prevX, prevY;
+			if (config.invert) {
+				height = -height;
+				y = 0;
+			}
+			ease = ease.getRatio ? ease : Ease.map[ease] || console.log("No ease found: ", ease);
+			if (!ease.rawBezier) {
+				a = ["M" + x + "," + y];
+				precision = Math.max(5, (config.precision || 1) * 200);
+				inc = 1 / precision;
+				precision += 2;
+				threshold = 5 / precision;
+				prevX = (((x + inc * width) * rnd) | 0) / rnd;
+				prevY = (((y + ease.getRatio(inc) * -height) * rnd) | 0) / rnd;
+				slope = (prevY - y) / (prevX - x);
+				for (i = 2; i < precision; i++) {
+					tx = (((x + i * inc * width) * rnd) | 0) / rnd;
+					ty = (((y + ease.getRatio(i * inc) * -height) * rnd) | 0) / rnd;
+					if (Math.abs((ty - prevY) / (tx - prevX) - slope) > threshold || i === precision - 1) { //only add points when the slope changes beyond the threshold
+						a.push(prevX + "," + prevY);
+						slope = (ty - prevY) / (tx - prevX);
+					}
+					prevX = tx;
+					prevY = ty;
+				}
+			} else {
+				a = [];
+				precision = ease.rawBezier.length;
+				for (i = 0; i < precision; i += 2) {
+					a.push((((x + ease.rawBezier[i] * width) * rnd) | 0) / rnd + "," + (((y + ease.rawBezier[i + 1] * -height) * rnd) | 0) / rnd);
+				}
+				a[0] = "M" + a[0];
+				a[1] = "C" + a[1];
+			}
+			if (e) {
+				(typeof(e) === "string" ? document.querySelector(e) : e).setAttribute("d", a.join(" "));
+			}
+			return a.join(" ");
+		};
+
+		return CustomEase;
+
+	}, true);
+
+}); if (_gsScope._gsDefine) { _gsScope._gsQueue.pop()(); }
+
+//export to AMD/RequireJS and CommonJS/Node (precursor to full modular build system coming at a later date)
+(function(name) {
+	"use strict";
+	var getGlobal = function() {
+		return (_gsScope.GreenSockGlobals || _gsScope)[name];
+	};
+	if (typeof(define) === "function" && define.amd) { //AMD
+		define(["./TweenLite"], getGlobal);
+	} else if (typeof(module) !== "undefined" && module.exports) { //node
+		require("./TweenLite.js");
+		module.exports = getGlobal();
+	}
+}("CustomEase"));
